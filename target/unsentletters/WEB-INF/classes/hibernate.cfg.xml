@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC
-    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
-
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
 
-        <!-- MySQL Connection -->
-        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://mysql-unsentletters.alwaysdata.net:3306/unsentletters_db?useSSL=true</property>
-        <property name="connection.username">442629_user</property>
-        <property name="connection.password">akash4652</property>
+        <!-- PostgreSQL Connection -->
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://${DB_HOST}:5432/${DB_NAME}</property>
+        <property name="hibernate.connection.username">${DB_USER}</property>
+        <property name="hibernate.connection.password">${DB_PASSWORD}</property>
 
-        <!-- Hibernate Settings -->
-        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="hbm2ddl.auto">update</property>
+        <!-- PostgreSQL Dialect -->
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
+        <!-- Auto-create tables on first deploy -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- Hibernate Options -->
         <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
 
+        <!-- Your entities -->
+        <mapping class="com.UnsentLetters.model.Letter"/>
+        <mapping class="com.UnsentLetters.model.User"/>
     </session-factory>
 </hibernate-configuration>
