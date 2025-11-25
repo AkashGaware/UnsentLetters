@@ -1,53 +1,39 @@
 package com.UnsentLetters.Utility;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.Session;
 
 import com.UnsentLetters.model.Letter;
 
-import java.util.Properties;
-
 public class HibernateUtil {
 
-    private static SessionFactory sessionFactory;
+    private static final SessionFactory sessionFactory;
 
     static {
         try {
-            // Load properties from db.properties
-            Properties props = new Properties();
-            props.load(Thread.currentThread()
-                    .getContextClassLoader()
-                    .getResourceAsStream("db.properties"));
-
             Configuration cfg = new Configuration();
-            cfg.configure("hibernate.cfg.xml");  // load XML first
-            cfg.addProperties(props);            // override with env properties
+            cfg.configure("hibernate.cfg.xml");
 
+            // Add ALL your annotated entity classes here
             cfg.addAnnotatedClass(Letter.class);
-          //  cfg.addAnnotatedClass(User.class);
 
             sessionFactory = cfg.buildSessionFactory();
 
-        } catch (Exception e) {
-            System.err.println("Hibernate initialization error: " + e);
-            throw new ExceptionInInitializerError(e);
+        } catch (Throwable ex) {
+            System.err.println("SessionFactory creation error: " + ex);
+            throw new ExceptionInInitializerError(ex);
         }
     }
 
-
-    // Retrieve the SessionFactory
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 
-    // Open a new Session
     public static Session openSession() {
         return sessionFactory.openSession();
     }
 
-    // Close the SessionFactory
     public static void shutdown() {
         if (sessionFactory != null) {
             sessionFactory.close();

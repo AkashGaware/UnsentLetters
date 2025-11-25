@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC
-        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
     <session-factory>
 
-        <!-- PostgreSQL Dialect -->
+        <!-- PostgreSQL Driver -->
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+
+        <!-- IMPORTANT: Replace host/db/user/password below -->
+        <property name="hibernate.connection.url">
+            jdbc:postgresql://dpg-d4ioub4hg0os73a3hbsg-a.oregon-postgres.render.com:5432/unsent-letters-db
+        </property>
+
+        <property name="hibernate.connection.username">unsentletters_user</property>
+        <property name="hibernate.connection.password">sSy5mRNPRmXpsiPXKJYT1aQVNJCz1kpr</property>
+
+        <!-- Hibernate Dialect -->
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 
-        <!-- Auto-create tables -->
+        <!-- Auto schema update -->
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <!-- Hibernate options -->
+        <!-- Debug SQL -->
         <property name="show_sql">true</property>
-        <property name="format_sql">true</property>
 
         <!-- Entities -->
         <mapping class="com.UnsentLetters.model.Letter"/>
-       
 
     </session-factory>
 </hibernate-configuration>
