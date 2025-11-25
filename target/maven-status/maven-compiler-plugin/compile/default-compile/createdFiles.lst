@@ -1,0 +1,5 @@
+com\UnsentLetters\controller\Search.class
+com\UnsentLetters\Utility\HibernateUtil.class
+com\UnsentLetters\dao\LetterDAO.class
+com\UnsentLetters\model\Letter.class
+com\UnsentLetters\controller\AddLetter.class

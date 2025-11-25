@@ -7,37 +7,53 @@ import org.hibernate.cfg.Configuration;
 
 import com.UnsentLetters.model.Letter;
 
-
-
+import java.util.Properties;
 
 public class HibernateUtil {
-	 private static SessionFactory sessionFactory;
 
-	    static {
-	        try {
-	            // Build the SessionFactory from hibernate.cfg.xml
-	            sessionFactory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Letter.class).buildSessionFactory();
-	        } catch (HibernateException ex) {
-	            // Log the exception to trace issues in configuration
-	            System.err.println("Initial SessionFactory creation failed." + ex);
-	            throw new ExceptionInInitializerError(ex);
-	        }
-	    }
+    private static SessionFactory sessionFactory;
 
-	    // Retrieve the SessionFactory
-	    public static SessionFactory getSessionFactory() {
-	        return sessionFactory;
-	    }
+    static {
+        try {
+            // Load properties from db.properties
+            Properties props = new Properties();
+            props.load(Thread.currentThread()
+                    .getContextClassLoader()
+                    .getResourceAsStream("db.properties"));
 
-	    // Open a new Session
-	    public static Session openSession() {
-	        return sessionFactory.openSession();
-	    }
+            // Build the SessionFactory using cfg + properties
+            Configuration cfg = new Configuration();
+            cfg.addProperties(props);
+            cfg.configure("hibernate.cfg.xml");
 
-	    // Close the SessionFactory
-	    public static void shutdown() {
-	        if (sessionFactory != null) {
-	            sessionFactory.close();
-	        }
-	    }
+            // Add all your annotated classes
+            cfg.addAnnotatedClass(Letter.class);
+
+            sessionFactory = cfg.buildSessionFactory();
+
+        } catch (HibernateException ex) {
+            System.err.println("Initial SessionFactory creation failed. " + ex);
+            throw new ExceptionInInitializerError(ex);
+        } catch (Exception e) {
+            System.err.println("Error loading db.properties: " + e);
+            throw new ExceptionInInitializerError(e);
+        }
+    }
+
+    // Retrieve the SessionFactory
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    // Open a new Session
+    public static Session openSession() {
+        return sessionFactory.openSession();
+    }
+
+    // Close the SessionFactory
+    public static void shutdown() {
+        if (sessionFactory != null) {
+            sessionFactory.close();
+        }
+    }
 }
