@@ -11,7 +11,7 @@
 
         <!-- IMPORTANT: Replace host/db/user/password below -->
         <property name="hibernate.connection.url">
-            jdbc:postgresql://dpg-d4ioub4hg0os73a3hbsg-a.oregon-postgres.render.com:5432/unsent-letters-db
+            jdbc:postgresql://dpg-d4ioub4hg0os73a3hbsg-a.oregon-postgres.render.com:5432/unsentletters_rqcy
         </property>
 
         <property name="hibernate.connection.username">unsentletters_user</property>
