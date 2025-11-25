@@ -62,4 +62,21 @@ public class LetterDAO {
             return null;
         }
     }
+    
+    public Letter getLetterById(int id) {
+        Session session = null;
+        Letter letter = null;
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            letter = session.get(Letter.class, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) session.close();
+        }
+
+        return letter;
+    }
+
 }
