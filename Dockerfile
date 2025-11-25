@@ -4,13 +4,13 @@ WORKDIR /app
 COPY . .
 RUN mvn -B -DskipTests package
 
-# Stage 2 — Deploy on Tomcat
-FROM tomcat:10.1-jdk17
+# Stage 2 — Deploy on Tomcat 9 (javax.servlet compatible)
+FROM tomcat:9.0-jdk17
 
 # Remove default ROOT
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
 
-# Copy WAR from Maven build (works for any name)
+# Copy WAR from Maven build
 COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 
 EXPOSE 8080
