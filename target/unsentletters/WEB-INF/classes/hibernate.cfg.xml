@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC
-	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
 <hibernate-configuration>
     <session-factory>
-
-        <!-- PostgreSQL Connection -->
-        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">${DB_URL}</property>
-        <property name="hibernate.connection.username">${DB_USER}</property>
-        <property name="hibernate.connection.password">${DB_PASSWORD}</property>
 
         <!-- PostgreSQL Dialect -->
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 
-        <!-- Auto-create tables on first deploy -->
+        <!-- Auto-create tables -->
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <!-- Hibernate Options -->
+        <!-- Hibernate options -->
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
 
-        <!-- Your entities -->
+        <!-- Entities -->
         <mapping class="com.UnsentLetters.model.Letter"/>
-        <mapping class="com.UnsentLetters.model.User"/>
+       
+
     </session-factory>
 </hibernate-configuration>

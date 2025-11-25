@@ -21,24 +21,21 @@ public class HibernateUtil {
                     .getContextClassLoader()
                     .getResourceAsStream("db.properties"));
 
-            // Build the SessionFactory using cfg + properties
             Configuration cfg = new Configuration();
-            cfg.addProperties(props);
-            cfg.configure("hibernate.cfg.xml");
+            cfg.configure("hibernate.cfg.xml");  // load XML first
+            cfg.addProperties(props);            // override with env properties
 
-            // Add all your annotated classes
             cfg.addAnnotatedClass(Letter.class);
+          //  cfg.addAnnotatedClass(User.class);
 
             sessionFactory = cfg.buildSessionFactory();
 
-        } catch (HibernateException ex) {
-            System.err.println("Initial SessionFactory creation failed. " + ex);
-            throw new ExceptionInInitializerError(ex);
         } catch (Exception e) {
-            System.err.println("Error loading db.properties: " + e);
+            System.err.println("Hibernate initialization error: " + e);
             throw new ExceptionInInitializerError(e);
         }
     }
+
 
     // Retrieve the SessionFactory
     public static SessionFactory getSessionFactory() {
